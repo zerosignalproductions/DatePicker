@@ -20,8 +20,7 @@
  *   jquery.js
  */
 (function ($) {
-  var cache = {}, tmpl,
-  DatePicker = function () {
+  var DatePicker = function () {
     var ids = {},
       views = {
         years: 'datepickerViewYears',
@@ -29,15 +28,15 @@
         days:  'datepickerViewDays'
       },
       tpl = {
-        wrapper: '<div class="datepicker"><div class="datepickerBorderT" /><div class="datepickerBorderB" /><div class="datepickerBorderL" /><div class="datepickerBorderR" /><div class="datepickerBorderTL" /><div class="datepickerBorderTR" /><div class="datepickerBorderBL" /><div class="datepickerBorderBR" /><div class="datepickerContainer"><table cellspacing="0" cellpadding="0"><tbody><tr></tr></tbody></table></div></div>',
+        wrapper: '<div class="datepicker" tabindex="0"><div class="datePickerMonthHeader" style="display: none;"><a class="datepickerGoPrev" href="#" tabindex="0"><span><%=prev%></span></a><a class="datepickerMonth" tabindex="-1" href="#"><span></span></a><a class="datepickerGoNext" href="#" tabindex="0"><span><%=next%></span></a></div><div class="datepickerContainer"><table cellspacing="0" cellpadding="0"><tbody><tr></tr></tbody></table></div></div>',
         head: [
           '<td class="datepickerBlock">',
           '<table cellspacing="0" cellpadding="0">',
             '<thead>',
               '<tr>',
-                '<th colspan="7"><a class="datepickerGoPrev" href="#"><span><%=prev%></span></a>',
-                '<a class="datepickerMonth" href="#"><span></span></a>',
-                '<a class="datepickerGoNext" href="#"><span><%=next%></span></a></th>',
+                '<th colspan="7" class="datePickerMonthHeader"><a class="datepickerGoPrev" href="#" tabindex="0"><span><%=prev%></span></a>',
+                '<a class="datepickerMonth" tabindex="-1" href="#"><span></span></a>',
+                '<a class="datepickerGoNext" href="#" tabindex="0"><span><%=next%></span></a></th>',
               '</tr>',
               '<tr class="datepickerDoW">',
                 '<th><span><%=day1%></span></th>',
@@ -55,58 +54,58 @@
         days: [
           '<tbody class="datepickerDays">',
             '<tr>',
-              '<td class="<%=weeks[0].days[0].classname%>"><a href="#"><span><%=weeks[0].days[0].text%></span></a></td>',
-              '<td class="<%=weeks[0].days[1].classname%>"><a href="#"><span><%=weeks[0].days[1].text%></span></a></td>',
-              '<td class="<%=weeks[0].days[2].classname%>"><a href="#"><span><%=weeks[0].days[2].text%></span></a></td>',
-              '<td class="<%=weeks[0].days[3].classname%>"><a href="#"><span><%=weeks[0].days[3].text%></span></a></td>',
-              '<td class="<%=weeks[0].days[4].classname%>"><a href="#"><span><%=weeks[0].days[4].text%></span></a></td>',
-              '<td class="<%=weeks[0].days[5].classname%>"><a href="#"><span><%=weeks[0].days[5].text%></span></a></td>',
-              '<td class="<%=weeks[0].days[6].classname%>"><a href="#"><span><%=weeks[0].days[6].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[0].classname%>"><a href="#" tabindex="<%=weeks[0].days[0].tabindex%>"><span><%=weeks[0].days[0].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[1].classname%>"><a href="#" tabindex="<%=weeks[0].days[1].tabindex%>"><span><%=weeks[0].days[1].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[2].classname%>"><a href="#" tabindex="<%=weeks[0].days[2].tabindex%>"><span><%=weeks[0].days[2].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[3].classname%>"><a href="#" tabindex="<%=weeks[0].days[3].tabindex%>"><span><%=weeks[0].days[3].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[4].classname%>"><a href="#" tabindex="<%=weeks[0].days[4].tabindex%>"><span><%=weeks[0].days[4].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[5].classname%>"><a href="#" tabindex="<%=weeks[0].days[5].tabindex%>"><span><%=weeks[0].days[5].text%></span></a></td>',
+              '<td class="<%=weeks[0].days[6].classname%>"><a href="#" tabindex="<%=weeks[0].days[6].tabindex%>"><span><%=weeks[0].days[6].text%></span></a></td>',
             '</tr>',
             '<tr>',
-              '<td class="<%=weeks[1].days[0].classname%>"><a href="#"><span><%=weeks[1].days[0].text%></span></a></td>',
-              '<td class="<%=weeks[1].days[1].classname%>"><a href="#"><span><%=weeks[1].days[1].text%></span></a></td>',
-              '<td class="<%=weeks[1].days[2].classname%>"><a href="#"><span><%=weeks[1].days[2].text%></span></a></td>',
-              '<td class="<%=weeks[1].days[3].classname%>"><a href="#"><span><%=weeks[1].days[3].text%></span></a></td>',
-              '<td class="<%=weeks[1].days[4].classname%>"><a href="#"><span><%=weeks[1].days[4].text%></span></a></td>',
-              '<td class="<%=weeks[1].days[5].classname%>"><a href="#"><span><%=weeks[1].days[5].text%></span></a></td>',
-              '<td class="<%=weeks[1].days[6].classname%>"><a href="#"><span><%=weeks[1].days[6].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[0].classname%>"><a href="#" tabindex="<%=weeks[1].days[0].tabindex%>"><span><%=weeks[1].days[0].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[1].classname%>"><a href="#" tabindex="<%=weeks[1].days[1].tabindex%>"><span><%=weeks[1].days[1].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[2].classname%>"><a href="#" tabindex="<%=weeks[1].days[2].tabindex%>"><span><%=weeks[1].days[2].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[3].classname%>"><a href="#" tabindex="<%=weeks[1].days[3].tabindex%>"><span><%=weeks[1].days[3].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[4].classname%>"><a href="#" tabindex="<%=weeks[1].days[4].tabindex%>"><span><%=weeks[1].days[4].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[5].classname%>"><a href="#" tabindex="<%=weeks[1].days[5].tabindex%>"><span><%=weeks[1].days[5].text%></span></a></td>',
+              '<td class="<%=weeks[1].days[6].classname%>"><a href="#" tabindex="<%=weeks[1].days[6].tabindex%>"><span><%=weeks[1].days[6].text%></span></a></td>',
             '</tr>',
             '<tr>',
-              '<td class="<%=weeks[2].days[0].classname%>"><a href="#"><span><%=weeks[2].days[0].text%></span></a></td>',
-              '<td class="<%=weeks[2].days[1].classname%>"><a href="#"><span><%=weeks[2].days[1].text%></span></a></td>',
-              '<td class="<%=weeks[2].days[2].classname%>"><a href="#"><span><%=weeks[2].days[2].text%></span></a></td>',
-              '<td class="<%=weeks[2].days[3].classname%>"><a href="#"><span><%=weeks[2].days[3].text%></span></a></td>',
-              '<td class="<%=weeks[2].days[4].classname%>"><a href="#"><span><%=weeks[2].days[4].text%></span></a></td>',
-              '<td class="<%=weeks[2].days[5].classname%>"><a href="#"><span><%=weeks[2].days[5].text%></span></a></td>',
-              '<td class="<%=weeks[2].days[6].classname%>"><a href="#"><span><%=weeks[2].days[6].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[0].classname%>"><a href="#" tabindex="<%=weeks[2].days[0].tabindex%>"><span><%=weeks[2].days[0].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[1].classname%>"><a href="#" tabindex="<%=weeks[2].days[1].tabindex%>"><span><%=weeks[2].days[1].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[2].classname%>"><a href="#" tabindex="<%=weeks[2].days[2].tabindex%>"><span><%=weeks[2].days[2].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[3].classname%>"><a href="#" tabindex="<%=weeks[2].days[3].tabindex%>"><span><%=weeks[2].days[3].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[4].classname%>"><a href="#" tabindex="<%=weeks[2].days[4].tabindex%>"><span><%=weeks[2].days[4].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[5].classname%>"><a href="#" tabindex="<%=weeks[2].days[5].tabindex%>"><span><%=weeks[2].days[5].text%></span></a></td>',
+              '<td class="<%=weeks[2].days[6].classname%>"><a href="#" tabindex="<%=weeks[2].days[6].tabindex%>"><span><%=weeks[2].days[6].text%></span></a></td>',
             '</tr>',
             '<tr>',
-              '<td class="<%=weeks[3].days[0].classname%>"><a href="#"><span><%=weeks[3].days[0].text%></span></a></td>',
-              '<td class="<%=weeks[3].days[1].classname%>"><a href="#"><span><%=weeks[3].days[1].text%></span></a></td>',
-              '<td class="<%=weeks[3].days[2].classname%>"><a href="#"><span><%=weeks[3].days[2].text%></span></a></td>',
-              '<td class="<%=weeks[3].days[3].classname%>"><a href="#"><span><%=weeks[3].days[3].text%></span></a></td>',
-              '<td class="<%=weeks[3].days[4].classname%>"><a href="#"><span><%=weeks[3].days[4].text%></span></a></td>',
-              '<td class="<%=weeks[3].days[5].classname%>"><a href="#"><span><%=weeks[3].days[5].text%></span></a></td>',
-              '<td class="<%=weeks[3].days[6].classname%>"><a href="#"><span><%=weeks[3].days[6].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[0].classname%>"><a href="#" tabindex="<%=weeks[3].days[0].tabindex%>"><span><%=weeks[3].days[0].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[1].classname%>"><a href="#" tabindex="<%=weeks[3].days[1].tabindex%>"><span><%=weeks[3].days[1].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[2].classname%>"><a href="#" tabindex="<%=weeks[3].days[2].tabindex%>"><span><%=weeks[3].days[2].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[3].classname%>"><a href="#" tabindex="<%=weeks[3].days[3].tabindex%>"><span><%=weeks[3].days[3].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[4].classname%>"><a href="#" tabindex="<%=weeks[3].days[4].tabindex%>"><span><%=weeks[3].days[4].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[5].classname%>"><a href="#" tabindex="<%=weeks[3].days[5].tabindex%>"><span><%=weeks[3].days[5].text%></span></a></td>',
+              '<td class="<%=weeks[3].days[6].classname%>"><a href="#" tabindex="<%=weeks[3].days[6].tabindex%>"><span><%=weeks[3].days[6].text%></span></a></td>',
             '</tr>',
             '<tr>',
-              '<td class="<%=weeks[4].days[0].classname%>"><a href="#"><span><%=weeks[4].days[0].text%></span></a></td>',
-              '<td class="<%=weeks[4].days[1].classname%>"><a href="#"><span><%=weeks[4].days[1].text%></span></a></td>',
-              '<td class="<%=weeks[4].days[2].classname%>"><a href="#"><span><%=weeks[4].days[2].text%></span></a></td>',
-              '<td class="<%=weeks[4].days[3].classname%>"><a href="#"><span><%=weeks[4].days[3].text%></span></a></td>',
-              '<td class="<%=weeks[4].days[4].classname%>"><a href="#"><span><%=weeks[4].days[4].text%></span></a></td>',
-              '<td class="<%=weeks[4].days[5].classname%>"><a href="#"><span><%=weeks[4].days[5].text%></span></a></td>',
-              '<td class="<%=weeks[4].days[6].classname%>"><a href="#"><span><%=weeks[4].days[6].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[0].classname%>"><a href="#" tabindex="<%=weeks[4].days[0].tabindex%>"><span><%=weeks[4].days[0].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[1].classname%>"><a href="#" tabindex="<%=weeks[4].days[1].tabindex%>"><span><%=weeks[4].days[1].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[2].classname%>"><a href="#" tabindex="<%=weeks[4].days[2].tabindex%>"><span><%=weeks[4].days[2].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[3].classname%>"><a href="#" tabindex="<%=weeks[4].days[3].tabindex%>"><span><%=weeks[4].days[3].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[4].classname%>"><a href="#" tabindex="<%=weeks[4].days[4].tabindex%>"><span><%=weeks[4].days[4].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[5].classname%>"><a href="#" tabindex="<%=weeks[4].days[5].tabindex%>"><span><%=weeks[4].days[5].text%></span></a></td>',
+              '<td class="<%=weeks[4].days[6].classname%>"><a href="#" tabindex="<%=weeks[4].days[6].tabindex%>"><span><%=weeks[4].days[6].text%></span></a></td>',
             '</tr>',
             '<tr>',
-              '<td class="<%=weeks[5].days[0].classname%>"><a href="#"><span><%=weeks[5].days[0].text%></span></a></td>',
-              '<td class="<%=weeks[5].days[1].classname%>"><a href="#"><span><%=weeks[5].days[1].text%></span></a></td>',
-              '<td class="<%=weeks[5].days[2].classname%>"><a href="#"><span><%=weeks[5].days[2].text%></span></a></td>',
-              '<td class="<%=weeks[5].days[3].classname%>"><a href="#"><span><%=weeks[5].days[3].text%></span></a></td>',
-              '<td class="<%=weeks[5].days[4].classname%>"><a href="#"><span><%=weeks[5].days[4].text%></span></a></td>',
-              '<td class="<%=weeks[5].days[5].classname%>"><a href="#"><span><%=weeks[5].days[5].text%></span></a></td>',
-              '<td class="<%=weeks[5].days[6].classname%>"><a href="#"><span><%=weeks[5].days[6].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[0].classname%>"><a href="#" tabindex="<%=weeks[5].days[0].tabindex%>"><span><%=weeks[5].days[0].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[1].classname%>"><a href="#" tabindex="<%=weeks[5].days[1].tabindex%>"><span><%=weeks[5].days[1].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[2].classname%>"><a href="#" tabindex="<%=weeks[5].days[2].tabindex%>"><span><%=weeks[5].days[2].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[3].classname%>"><a href="#" tabindex="<%=weeks[5].days[3].tabindex%>"><span><%=weeks[5].days[3].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[4].classname%>"><a href="#" tabindex="<%=weeks[5].days[4].tabindex%>"><span><%=weeks[5].days[4].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[5].classname%>"><a href="#" tabindex="<%=weeks[5].days[5].tabindex%>"><span><%=weeks[5].days[5].text%></span></a></td>',
+              '<td class="<%=weeks[5].days[6].classname%>"><a href="#" tabindex="<%=weeks[5].days[6].tabindex%>"><span><%=weeks[5].days[6].text%></span></a></td>',
             '</tr>',
           '</tbody>'
         ],
@@ -149,6 +148,7 @@
          * parseable by Date.parse().  Defaults to todays date.
          */
         current: null,
+        currentDate: null,
         /**
          * true causes the datepicker calendar to be appended to the DatePicker 
          * element and rendered, false binds the DatePicker to an event on the trigger element
@@ -161,6 +161,25 @@
          * selection of any number of individual dates.
          */
         mode: 'single',
+
+        offsetPosition: {
+          x: 0,
+          y: 0
+        },
+
+        /**
+         * Disable specific, non-recurring dates
+         * @type {Array}
+         */
+        disabledStaticDates: [],
+
+        /**
+         * Disable recurring dates
+         * @type {Object}
+         */
+        disabledRecurringDates: {},
+
+        disabledDays: [],
         /**
          * Number of side-by-side calendars, defaults to 1.
          */
@@ -217,23 +236,14 @@
          * @param HTMLElement el the DatePicker element, ie the element that DatePicker was invoked upon
          */
         onChange: function() { },
-        /* 
-         * Callback, invoked when a date range is selected, with 'this' referring to
-         * the HTMLElement that DatePicker was invoked upon.
-         * 
-         * @param dates: Selected date(s), ie an array containing a 'from' and 'to' Date objects. 
-         * @param HTMLElement el the DatePicker element, ie the element that DatePicker was invoked upon
-         */
-        onRangeChange: function() { },
         /**
          * Invoked before a non-inline datepicker is shown, with 'this'
          * referring to the HTMLElement that DatePicker was invoked upon, ie
          * the trigger element
          * 
-         * @param HTMLDivElement el The datepicker container element, ie the div with class 'datepicker'.
+         * @param HTMLDivElement el The datepicker container element, ie the div with class 'datepicker'
          * @return true to allow the datepicker to be shown, false to keep it hidden
          */
-
         onBeforeShow: function() { return true },
         /**
          * Invoked after a non-inline datepicker is shown, with 'this'
@@ -292,12 +302,19 @@
       fill = function(el) {
         var options = $(el).data('datepicker');
         var cal = $(el);
-        var currentCal = Math.floor(options.calendars/2), date, data, dow, month, cnt = 0, days, indic, indic2, html, tblCal;
+        var currentCal = Math.floor(options.calendars / 2), date, data, dow, month, cnt = 0, days, indic, indic2, html, tblCal;
         
         cal.find('td>table tbody').remove();
         for(var i = 0; i < options.calendars; i++) {
           date = new Date(options.current);
-          date.addMonths(-currentCal + i);
+
+          //If multiple calendars, start on the current month, not previous
+          if(options.calendars > 1) {
+            date.addMonths(-currentCal + i + 1);
+          } else {
+            date.addMonths(-currentCal + i);
+          }
+
           tblCal = cal.find('table').eq(i+1);
           
           if(i == 0) tblCal.addClass('datepickerFirstView');
@@ -339,26 +356,107 @@
               text: date.getDate(),
               classname: []
             };
-            var today = new Date();
-            if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getYear() == date.getYear()) {
+
+            if (options.currentDate.getDate() == date.getDate() && options.currentDate.getMonth() == date.getMonth() && options.currentDate.getYear() == date.getYear()) {
               data.weeks[indic].days[indic2].classname.push('datepickerToday');
             }
-            if (date > today) {
-              // current month, date in future
+
+           if (date < options.currentDate) {
+              data.weeks[indic].days[indic2].classname.push('datepickerPast');
+              data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
+            }
+
+            if (date > options.currentDate) {
               data.weeks[indic].days[indic2].classname.push('datepickerFuture');
             }
             
             if (month != date.getMonth()) {
               data.weeks[indic].days[indic2].classname.push('datepickerNotInMonth');
-              // disable clicking of the 'not in month' cells
               data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
             }
+
+            //disable recurring dates - non-floating
+            for(var x = 0; x < options.disabledRecurringDates.nonFloating.length; x++) {
+              var nonFloatingDate = options.disabledRecurringDates.nonFloating[x].split('/');
+                  nonFloatingDate = new Date(date.getFullYear(), nonFloatingDate[0] - 1, nonFloatingDate[1]);
+
+              //options.disabledRecurringDates.nonFloating[x] = nonFloatingDate;
+              if(nonFloatingDate.getTime() === date.getTime()) {
+                data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
+              }
+            }
+
+            //disable recurring dates - floating
+            for(var x = 0; x < options.disabledRecurringDates.floating.length; x++) {
+              var floatingDate = options.disabledRecurringDates.floating[x].split('/');
+
+              //Get the first day of the floating holiday month for the current year
+              var floatingDay = nthDay(floatingDate[0], floatingDate[1], floatingDate[2] - 1, date.getFullYear());
+
+              //options.disabledRecurringDates.floating[x] = nonFloatingDate;
+              if(floatingDay.getTime() === date.getTime()) {
+                data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
+              }
+            }
+
+
+            //disable static dates  
+            for(var x = 0; x < options.disabledStaticDates.length; x++) {
+              options.disabledStaticDates[x] = new Date(options.disabledStaticDates[x].setHours(0,0,0,0));
+
+              if(options.disabledStaticDates[x].getTime() === date.getTime()) {
+                data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
+              }
+            }
+
             if (date.getDay() == 0) {
-              data.weeks[indic].days[indic2].classname.push('datepickerSunday');
+            //  data.weeks[indic].days[indic2].classname.push('datepickerSunday');
             }
+
             if (date.getDay() == 6) {
-              data.weeks[indic].days[indic2].classname.push('datepickerSaturday');
+              //data.weeks[indic].days[indic2].classname.push('datepickerSaturday');
             }
+
+            switch(date.getDay()) {
+              case 0:
+                if(options.disabledDays.indexOf(0) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }
+                data.weeks[indic].days[indic2].classname.push('datepickerSunday');
+                break;
+              case 1:
+                if(options.disabledDays.indexOf(1) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }              
+                break;
+              case 2:
+                if(options.disabledDays.indexOf(2) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }              
+                break;
+              case 3:
+                if(options.disabledDays.indexOf(3) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }              
+                break;
+              case 4:
+                if(options.disabledDays.indexOf(4) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }              
+                break;
+              case 5:
+                if(options.disabledDays.indexOf(5) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }              
+                break;
+              case 6:
+                if(options.disabledDays.indexOf(6) !== -1) {
+                  data.weeks[indic].days[indic2].classname.push('datepickerDisabled');  
+                }                            
+                data.weeks[indic].days[indic2].classname.push('datepickerSaturday');
+                break;
+            }
+
             var fromUser = options.onRenderCell(el, date);
             var val = date.valueOf();
             if(options.date && (!$.isArray(options.date) || options.date.length > 0)) {
@@ -375,6 +473,13 @@
             data.weeks[indic].days[indic2].classname = data.weeks[indic].days[indic2].classname.join(' ');
             cnt++;
             date.addDays(1);
+
+            //Check if we have a disabled field and do a tabindex of -1 
+            if(data.weeks[indic].days[indic2].classname.indexOf('datepickerDisabled') > -1) {
+              data.weeks[indic].days[indic2].tabindex = -1;
+            } else {
+              data.weeks[indic].days[indic2].tabindex = 0;
+            }
           }
           // Fill the datepickerDays template with data
           html = tmpl(tpl.days.join(''), data) + html;
@@ -443,8 +548,8 @@
         var cal = $('#' + options.id);
         if (options.extraHeight === false) {
           var divs = $(el).find('div');
-          options.extraHeight = divs.get(0).offsetHeight + divs.get(1).offsetHeight;  // heights from top/bottom borders
-          options.extraWidth = divs.get(2).offsetWidth + divs.get(3).offsetWidth;     // widths from left/right borders
+          //options.extraHeight = divs.get(0).offsetHeight + divs.get(1).offsetHeight;  // heights from top/bottom borders
+          //options.extraWidth = divs.get(2).offsetWidth + divs.get(3).offsetWidth;     // widths from left/right borders
         }
         var tbl = cal.find('table:first').get(0);
         var width = tbl.offsetWidth;
@@ -479,9 +584,8 @@
           var tblIndex = $('table', this).index(tblEl.get(0)) - 1;
           var tmp = new Date(options.current);
           var changed = false;
-          var changedRange = false;
           var fillIt = false;
-          var currentCal = Math.floor(options.calendars/2);
+          var currentCal = Math.floor(options.calendars / 2);
           
           if (parentEl.is('th')) {
             // clicking the calendar title
@@ -518,11 +622,21 @@
               // clicked either next/previous arrows
               if(tblEl.eq(0).hasClass('datepickerViewDays')) {
                 options.current.addMonths(el.hasClass('datepickerGoPrev') ? -1 : 1);
+                
+
+
               } else if(tblEl.eq(0).hasClass('datepickerViewMonths')) {
                 options.current.addYears(el.hasClass('datepickerGoPrev') ? -1 : 1);
               } else if(tblEl.eq(0).hasClass('datepickerViewYears')) {
                 options.current.addYears(el.hasClass('datepickerGoPrev') ? -12 : 12);
               }
+
+              if(el.hasClass('datepickerGoPrev')) {
+                $(tblEl).find('.datepickerGoPrev').focus();
+              } else {
+                $(tblEl).find('.datepickerGoNext').focus();
+              }
+
               fillIt = true;
             }
             
@@ -532,7 +646,7 @@
             if(tblEl.eq(0).hasClass('datepickerViewMonths')) {
               // clicked a month cell
               options.current.setMonth(tblEl.find('tbody.datepickerMonths td').index(parentEl));
-              options.current.setFullYear(parseInt(tblEl.find('thead th a.datepickerMonth span').text(), 10));
+              options.current.setFullYear(parseInt(tblEl.find('thead th .datepickerMonth span').text(), 10));
               options.current.addMonths(currentCal - tblIndex);
               tblEl.eq(0).toggleClass('datepickerViewMonths datepickerViewDays');
             } else if(tblEl.eq(0).hasClass('datepickerViewYears')) {
@@ -542,7 +656,13 @@
             } else {
               // clicked a day cell
                 var val = parseInt(el.text(), 10);
-                tmp.addMonths(tblIndex - currentCal);
+
+                if(options.calendars > 1) {
+                  tmp.addMonths(tblIndex - currentCal + 1);
+                } else {
+                  tmp.addMonths(tblIndex - currentCal);
+                }
+                
                 if (parentEl.hasClass('datepickerNotInMonth')) {
                   tmp.addMonths(val > 15 ? -1 : 1);
                 }
@@ -573,13 +693,11 @@
                       // second range click < first
                       options.date[1] = options.date[0] + 86399000;  // starting date + 1 day
                       options.date[0] = val - 86399000;  // minus 1 day
-
                     } else {
                       // initial range click, or final range click >= first
                       options.date[1] = val;
                     }
                     options.lastSel = !options.lastSel;
-                    changedRange = !options.lastSel;
                     break;
                   default:
                     options.date = tmp.valueOf();
@@ -594,9 +712,6 @@
           }
           if(changed) {
             options.onChange.apply(this, prepareDate(options));
-          }
-          if(changedRange) {
-            options.onRangeChange.apply(this, prepareDate(options));
           }
         }
         return false;
@@ -686,9 +801,8 @@
           fill(calEl);
           var pos = $(this).offset();
           var viewPort = getViewport();
-          var top = pos.top;
-          var left = pos.left;
-          var oldDisplay = $.curCSS(calEl, 'display');
+          var top = pos.top + options.offsetPosition.y;
+          var left = pos.left + options.offsetPosition.x;
           cal.css({
             visibility: 'hidden',
             display: 'block'
@@ -787,7 +901,19 @@
             //  zero and hour 23:59 for 'range' mode
         }
         return date;
-      };
+      },
+
+      nthDay = function(nth, weekday, month, year) {
+        var nthDate = new Date(year, month + ((nth <= 0) ? 1 : 0), 1);
+        var dayofweek = nthDate.getDay();
+        var offset = weekday - dayofweek;
+        nthDate = new Date(year, month + ((nth <= 0) ? 1 : 0), nthDate.getDate() + (offset + (nth - (offset >= 0 ? 1 : 0)) * 7));
+        //if (nthDate.getMonth() <> month) {
+        //  return "**ERROR ** nthDay (" + nth + ") Out of range";
+        //} else {
+          return nthDate;
+        //}
+    };
     return {
       /**
        * 'Public' functions
@@ -818,6 +944,8 @@
             } 
             options.current.setDate(1);
             options.current.setHours(0,0,0,0);
+
+            options.currentDate = options.currentDate || new Date();
             
             var id = 'datepicker_' + parseInt(Math.random() * 1000), cnt;
             options.id = id;
@@ -993,8 +1121,13 @@
     DatePickerClear: DatePicker.clear,
     DatePickerLayout: DatePicker.fixLayout
   });
+})(jQuery);
 
-  tmpl = function tmpl(str, data){
+(function(){
+  // within here, 'this' refers to the window object
+  var cache = {};
+  
+  this.tmpl = function tmpl(str, data){
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     var fn = !/\W/.test(str) ?
@@ -1023,5 +1156,16 @@
     // Provide some basic currying to the user
     return data ? fn( data ) : fn;
   };
+})();
 
-})(jQuery);
+
+if(!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function(needle) {
+    for(var i = 0; i < this.length; i++) {
+        if(this[i] === needle) {
+            return i;
+        }
+    }
+    return -1;
+  };
+}
